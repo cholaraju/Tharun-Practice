@@ -12,6 +12,18 @@ jobs:
         run: date
       - name: Show current working-directory
         run: pwd
+      - name: Read files
+        run: cat README.md 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
     
   

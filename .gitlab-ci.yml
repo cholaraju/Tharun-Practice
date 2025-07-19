@@ -1,0 +1,50 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_TLS_CERTDIR: ""
+
+stages:
+  - build
+  - test
+  - push_to_dockerhub
+  - deploy
+
+build_job:
+  stage: build
+  script:
+    - echo "Building the Docker image..."
+    - docker build -t node-app:latest .
+    - echo "Saving Docker image as node-app.tar..."
+    - docker save -o node-app.tar node-app:latest
+  artifacts:
+    paths:
+      - node-app.tar
+    expire_in: 1 hour
+
+test_job:
+  stage: test
+  script:
+    - echo "Running tests..."
+
+push_job:
+  stage: push_to_dockerhub
+  dependencies:
+    - build_job
+  script:
+    - echo "Loading Docker image from tar..."
+    - docker load -i node-app.tar
+    - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
+    - docker tag node-app:latest "$DOCKERHUB_USER/node-app:latest"
+    - docker push "$DOCKERHUB_USER/node-app:latest"
+
+deploy_job:
+  stage: deploy
+  script:
+    - echo "Deploying the app using Docker Compose..."
+    - apk add --no-cache docker-compose
+    - docker-compose up -d
+
