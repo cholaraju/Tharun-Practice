@@ -1,0 +1,20 @@
+name: my-first-workflow
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: welcome
+        run: echo "Welcome to my first workflow!"
+      - name: list files
+        run: ls -la
+      - name: display date
+        run: date
+      - name: Show current working-directory
+        run: pwd
+        
+    
+  
+
+
+    
