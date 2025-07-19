@@ -4,6 +4,7 @@ jobs: ### here we are defining multiple jobs in  a single workflow and each job 
 
   build_job:
     runs-on: ubuntu-latest
+### Here we cannot use the needs tag as it creates loop or cycle 
     steps:
       - name: Install cowsay
         run: sudo apt-get install -y cowsay
@@ -13,12 +14,14 @@ jobs: ### here we are defining multiple jobs in  a single workflow and each job 
         run: sleep 30
   test_job:
     runs-on: ubuntu-latest
+    needs: build_job
     steps: 
       - name: sleep for 10 seconds
         run: sleep 10
       - name: Text File Exists
         run: grep -i "dragon" dragon.txt
   deploy_Job:
+    needs: [build_job, test_job] ## Here we defined the dependency on both build_job and test_job use array syntax
     runs-on: ubuntu-latest
     steps:
       - name: Read Text File
