@@ -21,9 +21,15 @@ jobs:
           echo "Reading the contents of README.md:"
           cat README.md
       - name: Install cowsay
-        run: sudo apt-get install  cowsay -y
+        run: sudo apt-get install -y cowsay 
         
         ###  we are installing  cowsay library or program in order to use the library in the next step
+        ### here cowsay is a third party library that generates ASCII art
       - name: Generate ASCII Artwork
         run: cowsay -f dragon " Run for cover, I am a Dragon... RAWR!" >> dragon.txt
+        
+        
+        
+        
+        
         
