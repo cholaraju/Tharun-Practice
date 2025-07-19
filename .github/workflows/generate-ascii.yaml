@@ -1,0 +1,26 @@
+name: Generate ASCII Artwork
+on: [push, pull_request]
+jobs:
+  ascii_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: List files
+        run: ls -la
+      - name: Display date
+        run: date
+      - name: Show current working-directory
+        run: pwd
+      - name: Read files
+        run: cat README.md 
+      - name: List and Read files
+        run: |
+          echo "Listing all files in the current directory:"
+          ls -la
+          echo "Reading the contents of README.md:"
+          cat README.md
+      - name: Install cowsay
+        run: sudo apt-get install  cowsay -y
+      - name: Generate ASCII Artwork
+        run: cowsay -f dragon " Run for cover, I am a Dragon... RAWR!" >> dragon.txt
