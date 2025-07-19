@@ -1,0 +1,24 @@
+name: Execute Shell Script for ASCII Art 
+on: [push, pull_request]
+jobs:
+  ascii_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: List files
+        run: ls -la
+      - name: Executing Shell Script
+        run: | 
+            echo "Executing shell script to install cowsay and generate ASCII art"
+            chmod +x chola.sh
+            ./chola.sh
+## here we used shell script to execute and  replace all the commands in file chola.sh with with single step
+     
+        
+      
+            
+        
+        
+        
+        
