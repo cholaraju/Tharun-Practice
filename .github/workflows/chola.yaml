@@ -16,8 +16,15 @@ jobs:
         run: pwd
       - name: Read files
         run: cat README.md 
-        
-        
+      - name: List and Read files
+        run: |
+          echo "Listing all files in the current directory:"
+          ls -la
+          echo "Reading the contents of README.md:"
+          cat README.md
+## executing Third party libraries
+      - name: Generate ASCII Artwork
+        run: cowsay -f dragon " Run for cover, I am a Dragon... RAWR!" >> dragon.txt
         
         
         
