@@ -1,6 +1,7 @@
 name: Multi-job
 on: [push,pull_request]
-jobs:
+jobs: ### here we are defining multiple jobs in  a single workflow and each job can run independently in different runners or machines
+
   build_job:
     runs-on: ubuntu-latest
     steps:
@@ -24,3 +25,4 @@ jobs:
         run: cat dragon.txt
       - name: Deploy
         run: echo deploying ..........
+        
