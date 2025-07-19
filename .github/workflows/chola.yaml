@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: welcome
         run: echo "Welcome to my first workflow!"
+      - name: checkout code
+        uses: actions/checkout@v4 
       - name: list files
         run: ls -la
       - name: display date
