@@ -13,7 +13,7 @@ jobs: ### here we are defining multiple jobs in  a single workflow and each job 
       - name: Sleep for 30 seconds
         run: sleep 30
       - name: Upload dragon text File
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dragon-text-file
           path: dragon.txt ##root of the repository
@@ -24,7 +24,7 @@ jobs: ### here we are defining multiple jobs in  a single workflow and each job 
       - name: sleep for 10 seconds
         run: sleep 10
       - name: Download the upload artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dragon-text-file
       - name: Text File Exists
@@ -35,7 +35,7 @@ jobs: ### here we are defining multiple jobs in  a single workflow and each job 
     runs-on: ubuntu-latest
     steps:
       - name: Download the upload artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dragon-text-file
       - name: Read Text File
