@@ -25,6 +25,8 @@ jobs:
 ## executing Third party libraries
       - name: Generate ASCII Artwork
         run: cowsay -f dragon " Run for cover, I am a Dragon... RAWR!" >> dragon.txt
+      - name: view generated ASCII artwork
+        run: cat dragon.txt
         ## THIS dragon.txt generated  in this workflow will not be persisted after the workflow completes because it is run on runner's ephemeral filesystem.
         ## because it is not saved as an artifact or pushed to a repository.
         
