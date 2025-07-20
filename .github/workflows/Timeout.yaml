@@ -1,0 +1,51 @@
+name: TimeOut Workflow
+
+##level: job, step
+## it stops the job or step after a certain time
+## HERE DEPLOY JOB USING SLEEP COMMAND WHICH 600S (i.e which 10hrs it will cost us github action minutes for us so we stop using Time out)WE WELL USE TIMEOUT TO STOP THE JOB AFTER 60S
+on: push
+ 
+    
+        
+
+env:
+  IMAGE_NAME: github-actions-nginx
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker build
+        run: |
+          echo "Building image..."
+          echo docker build -t ${{ github.event.inputs.registry }}/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.image_tag }}
+
+  Login:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Login
+        run: |
+          echo "Logging in to Docker registry..."
+          echo docker login \
+            --username=${{ vars.DOCKER_USERNAME }} \
+            --password=${{ secrets.DOCKER_PASSWORD }}
+
+  Deploy:
+    needs: Login
+    concurrency: 
+      group: Production-deploy
+      cancel-in-progress: false
+      # if true it will cancel the previous job or workflow if it is still running
+      # if it is false it will wait for the current job or workflow to complete
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Run
+        timeout-minutes: 1
+        ## this will stop the job after 1 minute
+        ## but default it had to run for 10hrs because of sleep command
+        ## so we use timeout to stop the job after 1 minute
+        run: |
+          echo "Running Docker container..."
+          echo docker run -d -p 80:80 ${{ github.event.inputs.registry }}/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.image_tag }}
+          sleep 600s
