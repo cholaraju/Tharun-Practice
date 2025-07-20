@@ -1,0 +1,45 @@
+name: Dispatch EVENT Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Tag for the Docker image'
+        required: true
+        default: 'latest'
+      registry:
+        description: 'Docker registry (e.g., docker.io)'
+        required: true
+        default: 'docker.io'
+
+env:
+  IMAGE_NAME: github-actions-nginx
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker build
+        run: |
+          echo "Building image..."
+          echo docker build -t ${{ github.event.inputs.registry }}/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.image_tag }}
+
+  Login:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Login
+        run: |
+          echo "Logging in to Docker registry..."
+          echo docker login \
+            --username=${{ vars.DOCKER_USERNAME }} \
+            --password=${{ secrets.DOCKER_PASSWORD }}
+
+  Deploy:
+    needs: Login
+    runs-on: ubuntu-latest
+    steps:
+      - name: Docker Run
+        run: |
+          echo "Running Docker container..."
+          echo docker run -d -p 80:80 ${{ github.event.inputs.registry }}/${{ vars.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.image_tag }}
