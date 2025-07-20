@@ -1,0 +1,29 @@
+name: workflow Event filter and activity types
+on:
+  workflow_dispatch:
+#   schedule:
+#     - cron: '*/59 * * * *' # Every 59 minutes
+  push: 
+    branches:
+      - main
+      - '!feature/*' # Exclude feature branches(i.e ignoring push events on feature branches starting with 'feature/')
+      
+        
+   
+    # branches-ignore: 
+    #   - feature/* # feature/add-music ,feature/updateImages
+    #   - test/** # test/feature/add-music, test/feature/updateImages
+   
+  pull_request:
+    types: 
+      - opened # These are activity types that trigger the workflow
+      - closed
+    paths-ignore:  
+      - README.md # Ignore changes to README.md file FOR pull requests #it is filter
+    branches: 
+      - main # Only run for pull requests targeting the main branch # it is an filter
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo this workflow/job/step is execute for event type - ${{github.event_name}}
