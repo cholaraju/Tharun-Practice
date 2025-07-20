@@ -1,4 +1,4 @@
-name: Workflow level env variables
+name: Workflow-level variables
 on: [push, pull_request]  
 env:
   CONTAINER_REGISTRY: docker.io
