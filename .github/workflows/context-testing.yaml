@@ -42,3 +42,5 @@ jobs:
         run: echo docker run -d -p 80:80 docker.io/cholaraju29/github-actions-nginx:latest
         ## this will run the docker container with the image name and tag
         ## it will run the container in detached mode and map the port 80 of the container to the port 80 of the host machine
+        
+        
