@@ -11,6 +11,16 @@ on:
         description: 'Docker registry (e.g., docker.io)'
         required: true
         default: 'docker.io'
+      tharun:
+        description: 'Log level'
+        required: true
+        default: 'FUCKER'
+        type: choice
+        options:
+        - fUCKER
+        - MOTHERfUCKER
+        - SCUMBAG
+        
 
 env:
   IMAGE_NAME: github-actions-nginx
