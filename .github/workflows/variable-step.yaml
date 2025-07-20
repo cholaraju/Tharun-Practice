@@ -1,4 +1,4 @@
-name: Exploring variable and secrets
+name: Step-level variables
 on: [push, pull_request]
 
 jobs: 
