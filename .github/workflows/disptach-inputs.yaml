@@ -1,4 +1,4 @@
-name: Dispatch EVENT Workflow
+name: Dispatch EVENT WITH Inputs
 
 on:
   workflow_dispatch:
