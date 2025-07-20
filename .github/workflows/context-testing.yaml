@@ -1,5 +1,8 @@
 name: Context testing
 on: push
+env:
+  CONTAINER_REGISTRY: docker.io
+  IMAGE_NAME: github-actions-nginx
 
 jobs:
   dump_contexts_to_log:
@@ -29,3 +32,13 @@ jobs:
         env:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
+  deploy: 
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    ## this job will execute or run only if it is part of main branch
+    needs: dump_contexts_to_log
+    steps:
+      - name: Docker Run
+        run: echo docker run -d -p 80:80 docker.io/cholaraju29/github-actions-nginx:latest
+        ## this will run the docker container with the image name and tag
+        ## it will run the container in detached mode and map the port 80 of the container to the port 80 of the host machine
