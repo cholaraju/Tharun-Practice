@@ -35,7 +35,7 @@ jobs:
   deploy: 
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    ## this job will execute or run only if it is part of main branch
+    ## this job will execute or run only if it is part of main branch other wise  it will skip the job
     needs: dump_contexts_to_log
     steps:
       - name: Docker Run
