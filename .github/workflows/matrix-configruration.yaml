@@ -7,7 +7,7 @@ on:
 jobs:
   deploy:
     strategy:
-      fail-fast: true ## GitHub cancels all in-progress jobs which running or in queue if any matrix job fails
+      fail-fast: false ## GitHub cancels all in-progress jobs which running or in queue if any matrix job fails
                      ## if it is set to false it will not cancel all in-progress jobs  Default is set to true
       max-parallel: 2  # TO Control the maximum no,of jobs run in parallell using matrix strategy we can use this key-word
       matrix:
